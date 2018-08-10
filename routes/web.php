@@ -49,5 +49,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'MatematikaController@index')->name('matematika.index');
         Route::get('/addquiz', 'MatematikaController@create')->name('matematika.quiz');
         Route::post('/addquiz', 'MatematikaController@store')->name('matematika.store');
+
+        Route::get('/edit/{id}', 'MatematikaController@edit')->name('matematika.edit');
+        Route::post('/edit/{id}', 'MatematikaController@update')->name('matematika.update');
+        Route::delete('/delete/{id}', 'MatematikaController@destroy')->name('matematika.destroy');
+        Route::get('/show/{id}', 'MatematikaController@show')->name('matematika.show');
+
     });
 });

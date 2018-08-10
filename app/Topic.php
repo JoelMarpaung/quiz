@@ -3,6 +3,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use App\Matematika;
 
 /**
  * Class Topic
@@ -30,6 +31,6 @@ class Topic extends Model
 
     public function matematika()
     {
-        return $this->hasMany(Matematika::class, 'topic_id')->withTrashed();
+        return $this->hasMany(Matematika::class, 'topic_id');
     }
 }

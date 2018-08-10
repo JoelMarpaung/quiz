@@ -18,7 +18,7 @@ class MatematikaController extends Controller
      */
     public function index()
     {
-        $quiz = DB::table('matematikas')->where('user_id','=',Auth::user()->id)->get();
+        $quiz = Matematika::where('user_id','=',Auth::user()->id)->get();
         return view('matematika.index')->withQuiz($quiz);
     }
 
@@ -31,7 +31,6 @@ class MatematikaController extends Controller
     {
         $topic = \App\Topic::get()->pluck('title', 'id')->prepend('Please select', '');
         return view('matematika.quizcreate')->withTopic($topic);
-
     }
 
     /**
@@ -59,9 +58,10 @@ class MatematikaController extends Controller
      * @param  \App\Matematika  $matematika
      * @return \Illuminate\Http\Response
      */
-    public function show(Matematika $matematika)
+    public function show($id)
     {
-        //
+        $this->data['matematika'] = Matematika::findOrFail($id);
+        return view('matematika.quizshow', $this->data);
     }
 
     /**
@@ -70,9 +70,12 @@ class MatematikaController extends Controller
      * @param  \App\Matematika  $matematika
      * @return \Illuminate\Http\Response
      */
-    public function edit(Matematika $matematika)
+    public function edit($id)
     {
-        //
+        $this->data['topic']= Topic::all();
+        $this->data['matematika'] = Matematika::findOrFail($id);
+        return view('matematika.quizedit', $this->data);
+
     }
 
     /**
@@ -82,9 +85,13 @@ class MatematikaController extends Controller
      * @param  \App\Matematika  $matematika
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Matematika $matematika)
+    public function update(Request $request, $id)
     {
-        //
+        $matematika = Matematika::findOrFail($id);
+        $matematika->update($request->all());
+
+        return redirect()->route('matematika.index');
+
     }
 
     /**
@@ -93,16 +100,13 @@ class MatematikaController extends Controller
      * @param  \App\Matematika  $matematika
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Matematika $matematika)
+    public function destroy($id)
     {
-        //
-    }
+        $matematika = Matematika::findOrFail($id);
+        $matematika->delete();
 
-    public function addquiz(){
-        $relations = [
-            'topics' => \App\Topic::get()->pluck('title', 'id')->prepend('Please select', ''),
-        ];
-        return view('matematika.quizcreate', compact($relations));
+        return redirect()->route('matematika.index');
+
     }
 
 }

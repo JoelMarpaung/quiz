@@ -18,8 +18,9 @@
                 <thead>
                     <tr>
                         <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
-                        <th>@lang('quickadmin.questions.fields.topic')</th>
-                        <th>@lang('quickadmin.questions.fields.question-text')</th>
+                        <th>Title</th>
+                        <th>Topic</th>
+                        <th>Time</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -30,17 +31,18 @@
                             <tr data-entry-id="{{ $qu->id }}">
                                 <td></td>
                                 <td>{{ $qu->title }}</td>
-                                <td>{!! $qu->topic->title or '' !!}</td>
+                                <td>{{ $qu->topic->title}}</td>
+                                <td>{{ $qu->time}}</td>
                                 <td>
-                                    {{-- <a href="{{ route('questions.show',[$question->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.view')</a>
-                                    <a href="{{ route('questions.edit',[$question->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.edit')</a>
+                                    <a href="{{ route('matematika.show',[$qu->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.view')</a>
+                                    <a href="{{ route('matematika.edit',[$qu->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.edit')</a>
                                     {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',
                                         'onsubmit' => "return confirm('".trans("quickadmin.are_you_sure")."');",
-                                        'route' => ['questions.destroy', $question->id])) !!}
+                                        'route' => ['matematika.destroy', $qu->id])) !!}
                                     {!! Form::submit(trans('quickadmin.delete'), array('class' => 'btn btn-xs btn-danger')) !!}
-                                    {!! Form::close() !!} --}}
+                                    {!! Form::close() !!}
                                 </td>
                             </tr>
                         @endforeach

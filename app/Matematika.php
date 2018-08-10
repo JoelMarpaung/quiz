@@ -5,11 +5,23 @@ namespace App;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
+use App\Topic;
 
+
+/**
+ * Class Question
+ *
+ * @package App
+ * @property string $topic
+ * @property text $title
+ * @property integer $time
+ * @property text $description
+*/
 class Matematika extends Model
 {
     use SoftDeletes;
-
+    protected $table = 'matematikas';
     protected $fillable = ['title', 'time', 'description', 'topic_id', 'user_id'];
 
     public static function boot()
@@ -30,7 +42,7 @@ class Matematika extends Model
 
     public function topic()
     {
-        return $this->belongsTo(Topic::class, 'topic_id')->withTrashed();
+        return $this->belongsTo(Topic::class, 'topic_id');
     }
 
     public function user()
