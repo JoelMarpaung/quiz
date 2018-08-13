@@ -54,6 +54,18 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
+                    {!! Form::label('num_question', 'Number of Question', ['class' => 'control-label']) !!}
+                    {!! Form::text('num_question', old('num_question', $matematika->num_question), ['class' => 'form-control ', 'placeholder' => '']) !!}
+                    <p class="help-block"></p>
+                    @if($errors->has('num_question'))
+                        <p class="help-block">
+                            {{ $errors->first('num_question') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
                     {!! Form::label('description', 'Description', ['class' => 'control-label']) !!}
                     {!! Form::textarea('description', old('description', $matematika->description), ['class' => 'form-control ', 'placeholder' => '']) !!}
                     <p class="help-block"></p>

@@ -55,5 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/delete/{id}', 'MatematikaController@destroy')->name('matematika.destroy');
         Route::get('/show/{id}', 'MatematikaController@show')->name('matematika.show');
 
+        Route::get('/addquestion/{id}', 'MatematikaController@createQuestion')->name('matematika.question');
+        Route::post('/addquestion/{id}', 'MatematikaController@storeQuestion')->name('matematika.question.store');
+
     });
 });

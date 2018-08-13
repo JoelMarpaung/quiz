@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Matematika;
+use App\MatematikaQuestion;
+use Illuminate\Support\Facades\Input;
 use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +48,7 @@ class MatematikaController extends Controller
             'topic_id' => $request->input('topic_id'),
             'user_id' => Auth::user()->id,
             'time' => $request->input('time'),
+            'num_question' => $request->input('num_question'),
             'description' => $request->input('description')
         ]);
         $matematika->save();
@@ -61,6 +64,7 @@ class MatematikaController extends Controller
     public function show($id)
     {
         $this->data['matematika'] = Matematika::findOrFail($id);
+        $this->data['questions'] = MatematikaQuestion::where('matematika_id','=',$id)->get();
         return view('matematika.quizshow', $this->data);
     }
 
@@ -107,6 +111,39 @@ class MatematikaController extends Controller
 
         return redirect()->route('matematika.index');
 
+    }
+    public function createQuestion($id)
+    {
+        $this->data['matematika_id'] = $id;
+        $matematika = Matematika::findOrFail($id);
+        $this->data['num_question'] = $matematika->num_question;
+        return view('matematika.questioncreate', $this->data);
+    }
+
+    public function storeQuestion(Request $request, $id)
+    {
+        $input = Input::all();
+        $score = 0;
+        $question = $input['question'];
+        foreach ($question as $key => $value) {
+            $question = new MatematikaQuestion;
+            $question->matematika_id = $id;
+            $question->question = $input['question'][$key];
+            $question->point = $input['point'][$key];
+            $score = $score + $input['point'][$key];
+            $question->option_a = $input['option_a'][$key];
+            $question->option_b = $input['option_b'][$key];
+            $question->option_c = $input['option_c'][$key];
+            $question->option_d = $input['option_d'][$key];
+            $question->option_e = $input['option_e'][$key];
+            $question->correct = $input['correct'][$key];
+            $question->save();
+        }
+
+        $matematika = Matematika::findOrFail($id);
+        $matematika->score = $score;
+        $matematika->save();
+        return redirect()->route('matematika.show', $id);
     }
 
 }

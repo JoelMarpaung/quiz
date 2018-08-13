@@ -22,13 +22,13 @@ class Matematika extends Model
 {
     use SoftDeletes;
     protected $table = 'matematikas';
-    protected $fillable = ['title', 'time', 'description', 'topic_id', 'user_id'];
+    protected $fillable = ['title', 'time', 'num_question', 'description', 'topic_id', 'user_id'];
 
     public static function boot()
     {
         parent::boot();
 
-        Question::observe(new \App\Observers\UserActionsObserver);
+        Matematika::observe(new \App\Observers\UserActionsObserver);
     }
 
     /**
@@ -50,8 +50,8 @@ class Matematika extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function options()
+    public function question()
     {
-        return $this->hasMany(QuestionsOption::class, 'question_id')->withTrashed();
+        return $this->hasMany(MatematikaQuestion::class, 'matematika_id')->withTrashed();
     }
 }

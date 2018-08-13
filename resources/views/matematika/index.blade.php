@@ -21,7 +21,8 @@
                         <th>Title</th>
                         <th>Topic</th>
                         <th>Time</th>
-                        <th>&nbsp;</th>
+                        <th>Number of Question</th>
+
                     </tr>
                 </thead>
 
@@ -33,6 +34,7 @@
                                 <td>{{ $qu->title }}</td>
                                 <td>{{ $qu->topic->title}}</td>
                                 <td>{{ $qu->time}}</td>
+                                <td>{{ $qu->num_question}}</td>
                                 <td>
                                     <a href="{{ route('matematika.show',[$qu->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.view')</a>
                                     <a href="{{ route('matematika.edit',[$qu->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.edit')</a>

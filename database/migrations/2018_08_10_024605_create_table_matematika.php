@@ -22,6 +22,8 @@ class CreateTableMatematika extends Migration
 
     $table->string('title')->nullable();
     $table->integer('time')->nullable();
+    $table->integer('num_question')->nullable();
+    $table->integer('score')->default(0);
     $table->text('description')->nullable();
     $table->timestamps();
     $table->softDeletes();
