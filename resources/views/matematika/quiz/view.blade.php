@@ -33,7 +33,7 @@
                                 <td>{{ $qu->created_at}}</td>
                                 <td>
                                     {{-- <a href="{{ route('quizmatematika.play',[$qu->id]) }}" class="btn btn-xs btn-primary">Play</a> --}}
-                                    <a href="{{ route('quizmatematika.view',[$qu->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.view')</a>
+                                    {{-- <a href="{{ route('quizmatematika.view',[$qu->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.view')</a> --}}
                                 </td>
                             </tr>
                         @endforeach
