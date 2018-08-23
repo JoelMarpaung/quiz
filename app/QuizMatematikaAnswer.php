@@ -10,7 +10,7 @@ class QuizMatematikaAnswer extends Model
 {
     use SoftDeletes;
     protected $table = 'quiz_matematika_answers';
-    protected $fillable = ['user_id','matematika_id','quiz_id','question_id','correct','score'];
+    protected $fillable = ['user_id','matematika_id','quiz_id','question_id','correct','score','answer'];
 
     public static function boot()
     {

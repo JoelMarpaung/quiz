@@ -60,12 +60,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/showquestion/{id}', 'MatematikaController@showQuestion')->name('matematika.question.show');
         Route::get('/editquestion/{id}', 'MatematikaController@editQuestion')->name('matematika.question.edit');
         Route::post('/editquestion/{id}', 'MatematikaController@updateQuestion')->name('matematika.question.update');
-
     });
 
     Route::group(['prefix' => 'quizmatematika'], function() {
         Route::get('/', 'MatematikaController@quizIndex')->name('quizmatematika.index');
         Route::get('/play/{id}', 'MatematikaController@quizPlay')->name('quizmatematika.play');
+        Route::post('/store/{id}', 'MatematikaController@quizStore')->name('quizmatematika.store');
+        Route::get('/view/{id}', 'MatematikaController@quizView')->name('quizmatematika.view');
 
     });
 });

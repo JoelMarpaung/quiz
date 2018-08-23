@@ -25,6 +25,7 @@ class CreateQuizMatematikaAnswersTable extends Migration
             $table->foreign('question_id', 'fk_262_question_id_quiz_math')->references('id')->on('matematika_questions');
             $table->integer('correct')->unsigned()->default(0);
             $table->integer('score')->unsigned()->default(0);
+            $table->string('answer')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->index(['deleted_at']);

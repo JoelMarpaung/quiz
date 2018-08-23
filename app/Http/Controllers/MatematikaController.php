@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Matematika;
+use App\QuizMatematika;
+use App\QuizMatematikaAnswer;
 use App\MatematikaQuestion;
 use Illuminate\Support\Facades\Input;
 use App\Topic;
@@ -180,4 +182,53 @@ class MatematikaController extends Controller
         $this->data['questions'] = MatematikaQuestion::where('matematika_id','=',$id)->get();
         return view('matematika.quiz.play', $this->data);
     }
+
+    public function quizStore(Request $request, $id){
+        $quiz = new QuizMatematika([
+            'user_id' => Auth::user()->id,
+            'matematika_id' => $id
+        ]);
+        $quiz->save();
+        $matematika = Matematika::findOrFail($id);
+        $totalscore = 0;
+        $totalcorrect = 0;
+        foreach ($request->input('questions', []) as $key => $question) {
+            $data = MatematikaQuestion::findOrFail($question);
+            $status = 0;
+            $score = 0;
+            if ($request->input('answers.' . $question) != null
+                && $request->input('answers.' . $question) == $data->correct
+            ) {
+                $status = 1;
+                $score = $data->point;
+                $totalcorrect++;
+            }
+            QuizMatematikaAnswer::create([
+                'user_id' => Auth::id(),
+                'matematika_id' => $id,
+                'quiz_id' => $quiz->id,
+                'question_id' => $question,
+                'correct' => $status,
+                'score' => $score,
+                'answer' => $request->input('answers.' . $question),
+            ]);
+            $totalscore = $totalscore + $score;
+        }
+        $result = ($totalscore/$matematika->score)*100;
+        $quiz->update([
+            'total_correct' => $totalcorrect,
+            'result' => $result,
+            'score' => $totalscore,
+            ]);
+
+        return redirect()->route('quizmatematika.index');
+    }
+
+    public function quizView($id)
+    {
+        $this->data['matematika'] = Matematika::findOrFail($id);
+        $this->data['quiz'] = QuizMatematika::where('matematika_id', '=', $id,'and','user_id','=',Auth::user()->id)->orderBy('id','desc')->get();;
+        return view('matematika.quiz.view', $this->data);
+    }
 }
+
