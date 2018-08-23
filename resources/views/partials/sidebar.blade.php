@@ -13,6 +13,12 @@
                     <span class="fa arrow"></span>
                 </a>
             <ul class="sub-menu">
+            <li class="{{ $request->segment(1) == 'quizmatematika' ? 'active' : '' }}">
+                <a href="{{ route('quizmatematika.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span class="title">Quiz Matematika</span>
+                </a>
+            </li>
             <li class="{{ $request->segment(1) == 'tests' ? 'active' : '' }}">
                 <a href="{{ route('tests.index') }}">
                     <i class="fa fa-gears"></i>

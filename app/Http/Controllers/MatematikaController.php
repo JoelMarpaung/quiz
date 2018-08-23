@@ -146,4 +146,38 @@ class MatematikaController extends Controller
         return redirect()->route('matematika.show', $id);
     }
 
+    public function showQuestion($id)
+    {
+        $this->data['question'] = MatematikaQuestion::findOrFail($id);
+        return view('matematika.questionshow', $this->data);
+    }
+
+    public function editQuestion($id)
+    {
+        $this->data['question'] = MatematikaQuestion::findOrFail($id);
+        return view('matematika.questionedit', $this->data);
+    }
+
+    public function updateQuestion(Request $request, $id)
+    {
+        $matematika = MatematikaQuestion::findOrFail($id);
+        $matematika->update($request->all());
+
+        return redirect()->route('matematika.show', $matematika->matematika_id);
+
+    }
+
+
+    public function quizIndex()
+    {
+        $quiz = Matematika::all();
+        return view('matematika.quiz.index')->withQuiz($quiz);
+    }
+
+    public function quizPlay($id)
+    {
+        $this->data['matematika'] = Matematika::findOrFail($id);
+        $this->data['questions'] = MatematikaQuestion::where('matematika_id','=',$id)->get();
+        return view('matematika.quiz.play', $this->data);
+    }
 }

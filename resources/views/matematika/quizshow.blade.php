@@ -30,7 +30,6 @@
                             <table class="table table-bordered table-striped {{ count($questions) > 0 ? 'datatable' : '' }} dt-select">
                 <thead>
                     <tr>
-                        <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
                         <th>Question</th>
                         <th>Point</th>
                         <th>Correct Answer</th>
@@ -41,13 +40,12 @@
                     @if (count($questions) > 0)
                         @foreach ($questions as $qu)
                             <tr data-entry-id="{{ $qu->id }}">
-                                <td></td>
                                 <td>{{ $qu->question }}</td>
                                 <td>{{ $qu->point}}</td>
                                 <td>{{ $qu->correct}}</td>
                                 <td>
-                                    <a href="{{ route('matematika.show',[$qu->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.view')</a>
-                                    <a href="{{ route('matematika.edit',[$qu->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.edit')</a>
+                                    <a href="{{ route('matematika.question.show',[$qu->id]) }}" class="btn btn-xs btn-primary">@lang('quickadmin.view')</a>
+                                    <a href="{{ route('matematika.question.edit',[$qu->id]) }}" class="btn btn-xs btn-info">@lang('quickadmin.edit')</a>
                                     {!! Form::close() !!}
                                 </td>
                             </tr>
